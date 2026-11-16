@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Jelle Vogels Interieurbouw</title>
+  <meta name="description" content="Neem contact op met Jelle Vogels Interieurbouw in Erp voor keukens op maat, kasten, badkamermeubels en complete interieurs.">
+  <link rel="icon" href="assets/images/cropped-Ontwerp-zonder-titel-2023-12-18T081809.314.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">Ga naar inhoud</a>
+  <div class="sticky-sentinel" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="site-header-bar">
+      <div class="container header-inner">
+        <a class="site-logo" href="index.html">
+          <img
+            src="assets/images/JVI-Logo-wit.png"
+            alt="Jelle Vogels Interieurbouw — Home"
+            width="1292"
+            height="360"
+            decoding="async"
+          >
+        </a>
+
+        <nav class="site-nav" aria-label="Hoofdnavigatie">
+          <button
+            class="menu-button"
+            type="button"
+            popovertarget="site-menu"
+            popovertargetaction="toggle"
+            aria-controls="site-menu"
+          >
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menu</span>
+          </button>
+
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="index.html">Home</a></li>
+          <li><a href="wat-wij-doen.html">Wat wij doen</a></li>
+          <li><a href="keukens.html">Keukens</a></li>
+          <li><a href="kasten.html">Kasten</a></li>
+          <li><a href="badkamer.html">Badkamer</a></li>
+          <li><a href="meubels.html">Meubels</a></li>
+          <li><a href="projecten.html">Projecten</a></li>
+          <li><a class="nav-phone" href="tel:+31633006830">+31 (6) 33006830</a></li>
+          <li><a class="nav-cta" href="contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+<section class="page-banner">
+  <div class="container page-banner-grid">
+    <div class="prose-stack">
+      <span class="eyebrow">Kennismaken in Erp</span>
+      <h1 id="main-content" tabindex="-1">Contact</h1>
+      <p class="page-banner-copy">
+        Geïnteresseerd in een praktisch en op maatgemaakt interieur? Neem dan contact met me op!
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--accent" href="tel:+31633006830">Bel +31 (6) 33 00 68 30</a>
+        <a class="btn btn--ghost-light" href="mailto:info@jellevogelsinterieurbouw.nl">Mail direct</a>
+      </div>
+    </div>
+    <div class="page-banner-media">
+      <img src="assets/images/1-1-scaled.jpg" alt="Jelle Vogels aan het werk in de werkplaats bij de precisiezaag" width="2560" height="1239" decoding="async" class="pos-top" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div class="form-card">
+      <div class="prose-stack" style="margin-block-end: 1.75rem;">
+        <span class="eyebrow">Bericht sturen</span>
+        <h2>Vraag een kennismaking of 3D-ontwerp aan</h2>
+        <p class="lead">Velden met een * zijn verplicht.</p>
+      </div>
+
+      <form id="contact-form" method="post" action="mailto:info@jellevogelsinterieurbouw.nl" novalidate>
+        <div class="form-row-2">
+          <div class="field">
+            <label for="first_name">Voornaam <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              required
+              autocomplete="given-name"
+              data-error="first-name-error"
+            >
+            <div id="first-name-error" class="error-msg">
+              <span role="img" aria-label="Fout">!</span> Vul uw voornaam in.
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="last_name">Achternaam <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              required
+              autocomplete="family-name"
+              data-error="last-name-error"
+            >
+            <div id="last-name-error" class="error-msg">
+              <span role="img" aria-label="Fout">!</span> Vul uw achternaam in.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="field">
+            <label for="email_address">Email adres <span aria-hidden="true">*</span></label>
+            <span id="email-hint" class="hint">Bijvoorbeeld: naam@voorbeeld.nl</span>
+            <input
+              type="email"
+              id="email_address"
+              name="email_address"
+              required
+              inputmode="email"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+              aria-describedby="email-hint"
+              data-error="email-error"
+            >
+            <div id="email-error" class="error-msg">
+              <span role="img" aria-label="Fout">!</span> Vul een geldig e-mailadres in, zoals naam@voorbeeld.nl.
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="phone_number">Telefoonnummer <span aria-hidden="true">*</span></label>
+            <span id="phone-hint" class="hint">Bijvoorbeeld: 06 33006830</span>
+            <input
+              type="tel"
+              id="phone_number"
+              name="phone_number"
+              required
+              inputmode="tel"
+              autocomplete="tel"
+              aria-describedby="phone-hint"
+              data-error="phone-error"
+            >
+            <div id="phone-error" class="error-msg">
+              <span role="img" aria-label="Fout">!</span> Vul uw telefoonnummer in.
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subject">Onderwerp <span aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            required
+            data-error="subject-error"
+          >
+          <div id="subject-error" class="error-msg">
+            <span role="img" aria-label="Fout">!</span> Vul het onderwerp in (bijvoorbeeld Keuken op maat).
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">Bericht <span aria-hidden="true">*</span></label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            data-error="message-error"
+          ></textarea>
+          <div id="message-error" class="error-msg">
+            <span role="img" aria-label="Fout">!</span> Vul uw bericht of wensen in.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--primary">Verzenden</button>
+
+        <div id="form-status" class="form-status" role="status" tabindex="-1" hidden>
+          <strong>Bedankt! Het bericht staat klaar om te versturen.</strong>
+          <p>Klik hieronder om uw mailprogramma te openen met de ingevulde gegevens, of bel direct naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.</p>
+          <div class="btn-row">
+            <a id="form-mailto-link" class="btn btn--primary" href="mailto:info@jellevogelsinterieurbouw.nl">Open in e-mailprogramma</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="prose-stack">
+      <div class="hours-card">
+        <h3>Bedrijfsgegevens</h3>
+        <dl class="hours-list">
+          <div class="hours-row"><dt>Bedrijf</dt><dd>Jelle Vogels Interieurbouw</dd></div>
+          <div class="hours-row"><dt>Adres</dt><dd>Kempkensweg 9, 5469 NL Erp</dd></div>
+          <div class="hours-row"><dt>Bezoek</dt><dd>Alleen op afspraak</dd></div>
+          <div class="hours-row"><dt>Telefoon</dt><dd><a href="tel:+31633006830">+31 (6) 33 00 68 30</a></dd></div>
+          <div class="hours-row"><dt>E-mail</dt><dd><a href="mailto:info@jellevogelsinterieurbouw.nl">info@jellevogelsinterieurbouw.nl</a></dd></div>
+        </dl>
+      </div>
+
+      <div class="media-frame media-frame--landscape">
+        <img src="assets/images/Ontwerp-zonder-titel-49.jpg" alt="Sfeerbeeld van een op maat gemaakte zwarte thuiswerkplek met massieve wandplanken" width="1920" height="1080" decoding="async" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="openingstijden" class="section section--tinted">
+  <div class="container split-grid">
+    <div class="hours-card reveal">
+      <div class="prose-stack">
+        <span class="eyebrow">Werkplaats &amp; Afspraak</span>
+        <h2>Openingstijden</h2>
+        <p class="lead">Bezoek onze werkplaats aan de Kempkensweg 9 in Erp (alleen op afspraak) om materialen, stalen en 3D-ontwerpen samen te bekijken.</p>
+      </div>
+      <dl class="hours-list">
+        <div class="hours-row"><dt>Maandag</dt><dd>08:00 – 18:00</dd></div>
+<div class="hours-row"><dt>Dinsdag</dt><dd>08:00 – 18:00</dd></div>
+<div class="hours-row"><dt>Woensdag</dt><dd>08:00 – 18:00</dd></div>
+<div class="hours-row"><dt>Donderdag</dt><dd>08:00 – 18:00</dd></div>
+<div class="hours-row"><dt>Vrijdag</dt><dd>08:00 – 18:00</dd></div>
+<div class="hours-row"><dt>Zaterdag</dt><dd>09:00 – 17:00</dd></div>
+<div class="hours-row"><dt>Zondag</dt><dd>Gesloten</dd></div>
+      </dl>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="contact.html">Contact</a>
+        <a class="btn btn--outline" href="tel:+31633006830">+31 (6) 33 00 68 30</a>
+      </div>
+    </div>
+    <div class="media-frame media-frame--landscape reveal">
+      <img src="assets/images/2-scaled.jpg" alt="Kleur- en materiaalstalen in eiken, marmer en zwart metaal naast een technische 3D-tekening van een kast" width="2560" height="1462" decoding="async" loading="lazy">
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img
+            src="assets/images/JVI-Logo-wit.png"
+            alt="Jelle Vogels Interieurbouw"
+            width="1292"
+            height="360"
+            loading="lazy"
+            decoding="async"
+          >
+          <p>Maatwerk keukens, kasten, badkamermeubels en complete interieurs voor de particuliere en zakelijke markt in de regio Meierijstad en Maashorst.</p>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Contact &amp; Adres</h2>
+          <ul class="footer-list">
+            <li><strong>Jelle Vogels Interieurbouw</strong></li>
+            <li>Kempkensweg 9, 5469 NL Erp (alleen op afspraak)</li>
+            <li><a href="tel:+31633006830">+31 (6) 33 00 68 30</a></li>
+            <li><a href="mailto:info@jellevogelsinterieurbouw.nl">info@jellevogelsinterieurbouw.nl</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Navigatie</h2>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="wat-wij-doen.html">Wat wij doen</a></li>
+            <li><a href="keukens.html">Keukens</a></li>
+            <li><a href="kasten.html">Kasten</a></li>
+            <li><a href="badkamer.html">Badkamer</a></li>
+            <li><a href="meubels.html">Meubels</a></li>
+            <li><a href="projecten.html">Projecten</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Social media</h2>
+          <ul class="footer-list">
+            <li>Instagram</li>
+            <li>Facebook</li>
+            <li>Pinterest</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Jelle Vogels Interieurbouw — Erp, Meierijstad &amp; Maashorst</p>
+        <div class="footer-bottom-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="#main-content">Ga naar de bovenkant</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
