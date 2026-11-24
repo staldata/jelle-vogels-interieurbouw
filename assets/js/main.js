@@ -450,8 +450,7 @@ if (contactForm) {
   const mailtoBtn = document.getElementById("form-mailto-link");
   const submitBtn = document.getElementById("contact-submit");
   const endpoint =
-    contactForm.dataset.endpoint ||
-    "https://formsubmit.co/ajax/be63628c4d19406a5c5d51dac8fe9c3a";
+    contactForm.dataset.endpoint || "https://api.web3forms.com/submit";
 
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -462,7 +461,7 @@ if (contactForm) {
     }
 
     const data = new FormData(contactForm);
-    if (String(data.get("_honey") || "").trim() !== "") {
+    if (data.get("botcheck")) {
       if (statusBox) {
         statusBox.classList.remove("form-status--error");
         if (statusTitle) statusTitle.textContent = "Bedankt! Uw bericht is verstuurd.";
@@ -477,6 +476,12 @@ if (contactForm) {
       return;
     }
 
+    const accessKey = String(
+      data.get("access_key") || "24b065c0-8ce4-499e-9b84-c479778e55a5"
+    ).trim();
+    const fromName = String(
+      data.get("from_name") || "Jelle Vogels Interieurbouw Website"
+    ).trim();
     const fullName = `${data.get("first_name") || ""} ${data.get("last_name") || ""}`.trim();
     const email = String(data.get("email_address") || "").trim();
     const phone = String(data.get("phone_number") || "").trim();
@@ -504,16 +509,15 @@ if (contactForm) {
     }
 
     const payload = {
-      Naam: fullName,
+      access_key: accessKey,
+      subject: `Nieuwe aanvraag via website: ${subject}`,
+      from_name: fromName,
+      replyto: email,
+      name: fullName,
       email,
       Telefoon: phone,
       Onderwerp: subject,
       Bericht: message,
-      _subject: `Nieuwe aanvraag via website: ${subject}`,
-      _replyto: email,
-      _template: "table",
-      _captcha: "false",
-      _honey: "",
     };
 
     const controller = new AbortController();
@@ -531,7 +535,7 @@ if (contactForm) {
       });
       const result = await res.json().catch(() => ({}));
 
-      if (!res.ok || result.success === false || result.success === "false") {
+      if (!res.ok || result.success !== true) {
         throw new Error(result.message || `HTTP ${res.status}`);
       }
 
@@ -549,25 +553,16 @@ if (contactForm) {
       contactForm.reset();
       announcer.textContent = "Bedankt! Uw bericht is verstuurd.";
     } catch (err) {
-      console.warn("FormSubmit error:", err);
+      console.warn("Web3Forms error:", err);
       const msg = String(err?.message || "").trim();
-      const needsActivation = /activat/i.test(msg);
       const isTimeout = err?.name === "AbortError";
 
       if (statusBox) {
         statusBox.classList.add("form-status--error");
-        if (statusTitle) {
-          statusTitle.textContent = needsActivation
-            ? "Formulier wacht nog op eenmalige activatie."
-            : "Het versturen lukte even niet.";
-        }
+        if (statusTitle) statusTitle.textContent = "Het versturen lukte even niet.";
         if (statusBody) {
           statusBody.textContent = "";
-          if (needsActivation) {
-            statusBody.append(
-              "FormSubmit heeft een activatiemail gestuurd naar info@jellevogelsinterieurbouw.nl. Zodra die link (check ook spam) is aangeklikt werkt het formulier direct. U kunt uw bericht hieronder alvast via uw e-mailprogramma versturen, of bellen naar "
-            );
-          } else if (isTimeout) {
+          if (isTimeout) {
             statusBody.append(
               "De formulierdienst reageerde niet op tijd (timeout na 12s). Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar "
             );
@@ -580,7 +575,7 @@ if (contactForm) {
           telLink.href = "tel:+31633006830";
           telLink.textContent = "+31 (6) 33 00 68 30";
           statusBody.append(telLink, ".");
-          if (!needsActivation && !isTimeout && msg) {
+          if (!isTimeout && msg) {
             const detail = document.createElement("span");
             detail.style.display = "block";
             detail.style.marginTop = "0.4rem";
@@ -593,9 +588,8 @@ if (contactForm) {
         statusBox.hidden = false;
         statusBox.focus();
       }
-      announcer.textContent = needsActivation
-        ? "Het formulier moet eerst eenmalig geactiveerd worden via de mail naar info@jellevogelsinterieurbouw.nl."
-        : "Het versturen via het formulier lukte niet. Gebruik de knop om uw e-mailprogramma te openen.";
+      announcer.textContent =
+        "Het versturen via het formulier lukte niet. Gebruik de knop om uw e-mailprogramma te openen.";
     } finally {
       clearTimeout(timeoutId);
       if (submitBtn) {
