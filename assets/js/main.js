@@ -516,6 +516,9 @@ if (contactForm) {
       _honey: "",
     };
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
     try {
       const res = await fetch(endpoint, {
         method: "POST",
@@ -524,6 +527,7 @@ if (contactForm) {
           Accept: "application/json",
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
       const result = await res.json().catch(() => ({}));
 
@@ -544,21 +548,39 @@ if (contactForm) {
       }
       contactForm.reset();
       announcer.textContent = "Bedankt! Uw bericht is verstuurd.";
-    } catch {
+    } catch (err) {
+      const msg = String(err?.message || "");
+      const needsActivation = /activat/i.test(msg);
+      const isTimeout = err?.name === "AbortError";
+
       if (statusBox) {
         statusBox.classList.add("form-status--error");
-        if (statusTitle) statusTitle.textContent = "Het versturen lukte even niet.";
+        if (statusTitle) {
+          statusTitle.textContent = needsActivation
+            ? "Formulier wacht nog op eenmalige activatie."
+            : "Het versturen lukte even niet.";
+        }
         if (statusBody) {
-          statusBody.innerHTML =
-            'Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+          if (needsActivation) {
+            statusBody.innerHTML =
+              'FormSubmit heeft een activatiemail gestuurd naar <strong>info@jellevogelsinterieurbouw.nl</strong>. Zodra die link (check ook spam) is aangeklikt werkt het formulier direct. U kunt uw bericht hieronder alvast via uw e-mailprogramma versturen, of bellen naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+          } else if (isTimeout) {
+            statusBody.innerHTML =
+              'De formulierdienst reageerde niet op tijd. Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+          } else {
+            statusBody.innerHTML =
+              'Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+          }
         }
         if (fallbackActions) fallbackActions.hidden = false;
         statusBox.hidden = false;
         statusBox.focus();
       }
-      announcer.textContent =
-        "Het versturen via het formulier lukte niet. Gebruik de knop om uw e-mailprogramma te openen.";
+      announcer.textContent = needsActivation
+        ? "Het formulier moet eerst eenmalig geactiveerd worden via de mail naar info@jellevogelsinterieurbouw.nl."
+        : "Het versturen via het formulier lukte niet. Gebruik de knop om uw e-mailprogramma te openen.";
     } finally {
+      clearTimeout(timeoutId);
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalLabel;
