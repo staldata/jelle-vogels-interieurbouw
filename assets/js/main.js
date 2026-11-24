@@ -451,7 +451,7 @@ if (contactForm) {
   const submitBtn = document.getElementById("contact-submit");
   const endpoint =
     contactForm.dataset.endpoint ||
-    "https://formsubmit.co/ajax/info@jellevogelsinterieurbouw.nl";
+    "https://formsubmit.co/ajax/be63628c4d19406a5c5d51dac8fe9c3a";
 
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
