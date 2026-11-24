@@ -549,7 +549,8 @@ if (contactForm) {
       contactForm.reset();
       announcer.textContent = "Bedankt! Uw bericht is verstuurd.";
     } catch (err) {
-      const msg = String(err?.message || "");
+      console.warn("FormSubmit error:", err);
+      const msg = String(err?.message || "").trim();
       const needsActivation = /activat/i.test(msg);
       const isTimeout = err?.name === "AbortError";
 
@@ -561,15 +562,31 @@ if (contactForm) {
             : "Het versturen lukte even niet.";
         }
         if (statusBody) {
+          statusBody.textContent = "";
           if (needsActivation) {
-            statusBody.innerHTML =
-              'FormSubmit heeft een activatiemail gestuurd naar <strong>info@jellevogelsinterieurbouw.nl</strong>. Zodra die link (check ook spam) is aangeklikt werkt het formulier direct. U kunt uw bericht hieronder alvast via uw e-mailprogramma versturen, of bellen naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+            statusBody.append(
+              "FormSubmit heeft een activatiemail gestuurd naar info@jellevogelsinterieurbouw.nl. Zodra die link (check ook spam) is aangeklikt werkt het formulier direct. U kunt uw bericht hieronder alvast via uw e-mailprogramma versturen, of bellen naar "
+            );
           } else if (isTimeout) {
-            statusBody.innerHTML =
-              'De formulierdienst reageerde niet op tijd. Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+            statusBody.append(
+              "De formulierdienst reageerde niet op tijd (timeout na 12s). Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar "
+            );
           } else {
-            statusBody.innerHTML =
-              'Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+            statusBody.append(
+              "Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar "
+            );
+          }
+          const telLink = document.createElement("a");
+          telLink.href = "tel:+31633006830";
+          telLink.textContent = "+31 (6) 33 00 68 30";
+          statusBody.append(telLink, ".");
+          if (!needsActivation && !isTimeout && msg) {
+            const detail = document.createElement("span");
+            detail.style.display = "block";
+            detail.style.marginTop = "0.4rem";
+            detail.style.fontSize = "0.85em";
+            detail.textContent = `Technische melding: ${msg}`;
+            statusBody.append(detail);
           }
         }
         if (fallbackActions) fallbackActions.hidden = false;
