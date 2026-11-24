@@ -91,7 +91,10 @@
         <p class="lead">Velden met een * zijn verplicht.</p>
       </div>
 
-      <form id="contact-form" method="post" action="mailto:info@jellevogelsinterieurbouw.nl" novalidate>
+      <form id="contact-form" method="post" action="https://formsubmit.co/info@jellevogelsinterieurbouw.nl" data-endpoint="https://formsubmit.co/ajax/info@jellevogelsinterieurbouw.nl" novalidate>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
         <div class="form-row-2">
           <div class="field">
             <label for="first_name">Voornaam <span aria-hidden="true">*</span></label>
@@ -193,12 +196,12 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn--primary">Verzenden</button>
+        <button id="contact-submit" type="submit" class="btn btn--primary">Verzenden</button>
 
         <div id="form-status" class="form-status" role="status" tabindex="-1" hidden>
-          <strong>Bedankt! Het bericht staat klaar om te versturen.</strong>
-          <p>Klik hieronder om uw mailprogramma te openen met de ingevulde gegevens, of bel direct naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.</p>
-          <div class="btn-row">
+          <strong id="form-status-title">Bedankt! Uw bericht is verstuurd.</strong>
+          <p id="form-status-body">We nemen zo snel mogelijk contact met u op. Liever direct overleggen? Bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.</p>
+          <div id="form-fallback-actions" class="btn-row" hidden>
             <a id="form-mailto-link" class="btn btn--primary" href="mailto:info@jellevogelsinterieurbouw.nl">Open in e-mailprogramma</a>
           </div>
         </div>

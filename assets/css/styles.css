@@ -1284,6 +1284,17 @@
     display: none;
   }
 
+  .form-status--error {
+    border-color: var(--error-600);
+    background-color: var(--error-100);
+    color: #6e1410;
+  }
+
+  .btn:disabled {
+    opacity: 0.65;
+    cursor: progress;
+  }
+
   /* Native Top-Layer Lightbox Dialog */
   .lightbox-dialog {
     inset: 0;

@@ -444,9 +444,16 @@ if (contactForm) {
   );
 
   const statusBox = document.getElementById("form-status");
+  const statusTitle = document.getElementById("form-status-title");
+  const statusBody = document.getElementById("form-status-body");
+  const fallbackActions = document.getElementById("form-fallback-actions");
   const mailtoBtn = document.getElementById("form-mailto-link");
+  const submitBtn = document.getElementById("contact-submit");
+  const endpoint =
+    contactForm.dataset.endpoint ||
+    "https://formsubmit.co/ajax/info@jellevogelsinterieurbouw.nl";
 
-  contactForm.addEventListener("submit", (e) => {
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!contactForm.checkValidity()) {
       const firstInvalid = contactForm.querySelector(":invalid");
@@ -455,11 +462,26 @@ if (contactForm) {
     }
 
     const data = new FormData(contactForm);
+    if (String(data.get("_honey") || "").trim() !== "") {
+      if (statusBox) {
+        statusBox.classList.remove("form-status--error");
+        if (statusTitle) statusTitle.textContent = "Bedankt! Uw bericht is verstuurd.";
+        if (statusBody) {
+          statusBody.innerHTML =
+            'We nemen zo snel mogelijk contact met u op. Liever direct overleggen? Bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+        }
+        if (fallbackActions) fallbackActions.hidden = true;
+        statusBox.hidden = false;
+        statusBox.focus();
+      }
+      return;
+    }
+
     const fullName = `${data.get("first_name") || ""} ${data.get("last_name") || ""}`.trim();
-    const email = String(data.get("email_address") || "");
-    const phone = String(data.get("phone_number") || "");
-    const subject = String(data.get("subject") || "Aanvraag maatwerk interieur");
-    const message = String(data.get("message") || "");
+    const email = String(data.get("email_address") || "").trim();
+    const phone = String(data.get("phone_number") || "").trim();
+    const subject = String(data.get("subject") || "Aanvraag maatwerk interieur").trim();
+    const message = String(data.get("message") || "").trim();
 
     const bodyText = [
       `Naam: ${fullName}`,
@@ -475,10 +497,72 @@ if (contactForm) {
       )}&body=${encodeURIComponent(bodyText)}`;
     }
 
-    if (statusBox) {
-      statusBox.hidden = false;
-      statusBox.focus();
+    const originalLabel = submitBtn?.textContent || "Verzenden";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Bezig met versturen...";
     }
-    announcer.textContent = "Bedankt! Uw bericht is klaargezet voor verzending.";
+
+    const payload = {
+      Naam: fullName,
+      email,
+      Telefoon: phone,
+      Onderwerp: subject,
+      Bericht: message,
+      _subject: `Nieuwe aanvraag via website: ${subject}`,
+      _replyto: email,
+      _template: "table",
+      _captcha: "false",
+      _honey: "",
+    };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json().catch(() => ({}));
+
+      if (!res.ok || result.success === false || result.success === "false") {
+        throw new Error(result.message || `HTTP ${res.status}`);
+      }
+
+      if (statusBox) {
+        statusBox.classList.remove("form-status--error");
+        if (statusTitle) statusTitle.textContent = "Bedankt! Uw bericht is verstuurd.";
+        if (statusBody) {
+          statusBody.innerHTML =
+            'We nemen zo snel mogelijk contact met u op. Liever direct overleggen? Bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+        }
+        if (fallbackActions) fallbackActions.hidden = true;
+        statusBox.hidden = false;
+        statusBox.focus();
+      }
+      contactForm.reset();
+      announcer.textContent = "Bedankt! Uw bericht is verstuurd.";
+    } catch {
+      if (statusBox) {
+        statusBox.classList.add("form-status--error");
+        if (statusTitle) statusTitle.textContent = "Het versturen lukte even niet.";
+        if (statusBody) {
+          statusBody.innerHTML =
+            'Klik hieronder om uw bericht direct via uw e-mailprogramma te versturen, of bel naar <a href="tel:+31633006830">+31 (6) 33 00 68 30</a>.';
+        }
+        if (fallbackActions) fallbackActions.hidden = false;
+        statusBox.hidden = false;
+        statusBox.focus();
+      }
+      announcer.textContent =
+        "Het versturen via het formulier lukte niet. Gebruik de knop om uw e-mailprogramma te openen.";
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    }
   });
 }
